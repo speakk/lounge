@@ -13,6 +13,7 @@ cmps = Concord.components
 
 Concord.loadComponents("components")
 Concord.loadSystems("systems")
+Concord.loadAssemblages("assemblages")
 
 local gameStates = {
   game = require("states.game"),

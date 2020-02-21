@@ -4,7 +4,10 @@ local MoveSystem = Concord.system({cmps.position, cmps.velocity})
 
 function MoveSystem:resetVelocities()
   for _, entity in ipairs(self.pool) do
-    entity:get(cmps.velocity).vector = Vector(0, 0)
+    local velC = entity:get(cmps.velocity)
+    if not velC.keepVelocity then
+      entity:get(cmps.velocity).vector = Vector(0, 0)
+    end
   end
 end
 

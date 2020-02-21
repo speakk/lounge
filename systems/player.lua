@@ -39,5 +39,17 @@ function PlayerSystem:moveDown()
   end
 end
 
+function PlayerSystem:shoot()
+  local bulletVelocity = 300
+  for i=1,#self.pool do
+    local player = self.pool[i]
+    local from = player:get(cmps.position).vector.copy + Vector(20,40)
+    local target = Vector(love.mouse.getX(), love.mouse.getY())
+    local startVelocity = (target - from).normalized * bulletVelocity
+    local bullet = Concord.entity():assemble(Concord.assemblages.bullet, from, startVelocity)
+    self:getWorld():addEntity(bullet)
+  end
+end
+
 return PlayerSystem
 
