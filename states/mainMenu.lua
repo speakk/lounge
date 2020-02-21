@@ -8,15 +8,29 @@ function mainMenu:initUI()
     --Press state
     state.pressed = false
     --The callback for the input subscription
-    local callback = function() state.pressed = true end
+    local callback = function()
+      print("cacacal")
+      state.pressed = true
+    end
     --The actual input subscription 
     input('clicked', callback)
+
+    local defaultColor = { 0.3, 0.3, 0.3 }
+    local color = defaultColor
+
+    input('hover', function ()
+      print("In hover1")
+      return function ()
+        print("In hover")
+        color = { 0.7, 0.2, 0.5 }
+      end
+    end)
 
     return function()
       if state.pressed then
         love.graphics.setColor(0.3,0.3,0.9)
       else
-        love.graphics.setColor(0.3,0.3,0.5)
+        love.graphics.setColor(unpack(color))
       end
       love.graphics.rectangle('fill', 0, 0, view.w, view.h)
     end
@@ -27,7 +41,7 @@ function mainMenu:initUI()
 
   return {
     {
-      x = 100,
+      x = 400,
       y = 100,
       element = button
     }
@@ -46,7 +60,3 @@ function mainMenu:draw()
 end
 
 return mainMenu
-
---local buttonFactory = helium(button)
---local button = buttonFactory({}, 200, 100)
---button:draw(10,10)

@@ -11,8 +11,8 @@ Concord = require('libs.concord')
 cmps = Concord.components
 -- GLOBALS END
 
-Concord.loadSystems("systems")
 Concord.loadComponents("components")
+Concord.loadSystems("systems")
 
 local gameStates = {
   game = require("states.game"),
@@ -20,4 +20,4 @@ local gameStates = {
 }
 
 Gamestate.registerEvents()
-Gamestate.switch(gameStates.game)
+Gamestate.switch(gameStates.mainMenu)
