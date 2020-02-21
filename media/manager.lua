@@ -55,20 +55,6 @@ do
   love.graphics.setCanvas()
 end
 
-print("flat", inspect(flatMediaDB))
-
-
--- for _, flatItem in ipairs(flatMediaDB) do
---   table.insert(fileList, flatItem.fileName)
--- end
-
--- print("fileList", inspect(fileList))
--- for _, fileName in ipairs(fileList) do
---   local sprite = love.graphics.newImage(fileName)
--- end
--- local sprites = love.graphics.newArrayImage(fileList)
--- sprites:setFilter("nearest", "nearest")
-
 local function getSpriteQuad(selector)
   --print(inspect(flatMediaDB[selector]))
   if not selector then error("getSprite is missing selector") end

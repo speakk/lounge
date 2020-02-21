@@ -1,3 +1,3 @@
 return Concord.component(function(component, vector)
-    component.position = position
+    component.vector = vector
 end)

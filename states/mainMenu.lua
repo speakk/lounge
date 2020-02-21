@@ -1,5 +1,8 @@
+local Gamestate = require("libs.hump.gamestate")
 local helium = require 'libs.helium'
 local input = require "libs.helium.core.input" 
+
+local game = require("states.game")
 
 local headerFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", 128)
 local buttonFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", 48)
@@ -20,6 +23,7 @@ function mainMenu:initUI()
 
     input('clicked', function()
       state.pressed = true
+      Gamestate.switch(game)
     end)
 
     state.color = defaultColor
@@ -80,6 +84,13 @@ function mainMenu:resize(w, h)
   recalcMenuPositions(self.ui, w, h)
 end
 
+function mainMenu:leave()
+  for i = 1,#self.ui do
+    local uiElement = self.ui[i]
+    uiElement:undraw()
+  end
+end
+
 function mainMenu:draw()
   love.graphics.clear(0.08,0.02,0.1,1)
   love.graphics.setFont(headerFont)
@@ -92,13 +103,4 @@ function mainMenu:draw()
   love.graphics.printf("Lounge", 0, 100, w, 'center')
 end
   
--- 
---
--- function mainMenu:draw()
---   for i = 1,#self.ui do
---     local uiElement = self.ui[i]
---     uiElement.element:draw(uiElement.x, uiElement.y)
---   end
--- end
-
 return mainMenu
