@@ -3,7 +3,7 @@ local generateTileName = function(category, name) return 'media/' .. category ..
 local mediaDB = {
   {
     name = "characters",
-    items = { 'fella1_01' },
+    items = { 'fella1_front' },
   }
 }
 

@@ -1,5 +1,5 @@
 --local mediaManager = require 'media.manager'
-local DrawSystem = Concord.system({cmps.sprite, 'sprites'})
+local DrawSystem = Concord.system({cmps.sprite, cmps.position, 'sprites'})
 
 function DrawSystem:init()
   self.spriteBatch = love.graphics.newSpriteBatch(mediaManager.atlas, 500)
