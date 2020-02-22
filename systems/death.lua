@@ -16,7 +16,10 @@ function DeathSystem:death(entity)
   self:getWorld():addEntity(blood)
 
   if entity:has(cmps.player) then
-    Gamestate.push(death)
+    if Gamestate.current() ~= death then
+      print("ENTERING DEATH")
+      Gamestate.push(death)
+    end
   end
 end
 

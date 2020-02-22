@@ -57,8 +57,11 @@ function death:enter(from)
     end
   end
 
+
+  print(buttonW, buttonH)
   local playButton = helium(button)({content="start over"}, buttonW, buttonH)
   playButton:draw(400, 200)
+  print("SETTING DRAW FOR DEATH")
 
   -- local buttonFactory = helium(button)
   -- local button = buttonFactory({}, 200, 100)
@@ -68,9 +71,7 @@ function death:enter(from)
 end
 
 function death:draw()
-  if self.from ~= self then
-    self.from:draw()
-  end
+  self.from:draw()
 
   love.graphics.setColor(1,1,1,1)
   love.graphics.setFont(headerFont)
@@ -83,7 +84,9 @@ function death:update(dt)
 end
 
 function death:leave()
+  print("LEAVING DEATH")
   self.playButton:undraw()
+  self.playButton = nil
 end
 
 return death
