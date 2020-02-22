@@ -4,6 +4,8 @@ local input = require "libs.helium.core.input"
 
 local game = require("states.game")
 
+local music
+
 local headerFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", 128)
 local buttonFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", 48)
 
@@ -78,6 +80,10 @@ end
 function mainMenu:init()
   self.ui = self.initUI()
   recalcMenuPositions(self.ui, love.graphics.getDimensions())
+
+  music = love.audio.newSource('media/music/menu.mp3', 'stream')
+  music:setVolume(0.2)
+  music:play()
 end
 
 function mainMenu:resize(w, h)
@@ -89,6 +95,8 @@ function mainMenu:leave()
     local uiElement = self.ui[i]
     uiElement:undraw()
   end
+
+  music:stop()
 end
 
 function mainMenu:draw()

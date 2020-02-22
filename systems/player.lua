@@ -60,9 +60,7 @@ function PlayerSystem:shoot()
       local from = player:get(cmps.position).vector.copy + Vector(20,40)
       local target = Vector(camera:mousePosition())
       local startVelocity = (target - from).normalized * bulletVelocity
-      -- TODO: 10 is bullet damage. Get it from player gun
-      local bullet = Concord.entity():assemble(Concord.assemblages.bullet, from, startVelocity, 10, {"player", "bullet"})
-      self:getWorld():addEntity(bullet)
+      self:getWorld():emit("bulletShot", from, startVelocity)
     end
 
     allowedToShoot = false

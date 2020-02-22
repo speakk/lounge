@@ -4,19 +4,12 @@ local Vector = require 'libs.brinevector'
 local mediaManager = require 'media.manager'
 local game = {}
 
+local music
+
 local function initializePlayer(self)
-  local entity = Concord.entity()
-
   local spritePath = 'characters.fella1_front'
-  entity:give(cmps.sprite, spritePath)
-  entity:give(cmps.position, Vector(100, 100))
-  entity:give(cmps.velocity)
-  entity:give(cmps.health, 100)
-  local quad = mediaManager.getSpriteQuad(spritePath)
-  local _, _, w, h = quad:getViewport()
-  entity:give(cmps.collision, w, h, "player")
+  local entity = Concord.entity():assemble(Concord.assemblages.character, Vector(math.random(1000), math.random(1000)), spritePath, 'player')
   entity:give(cmps.player)
-
   self.world:addEntity(entity)
 end
 
@@ -33,25 +26,22 @@ function game:enter()
     Concord.systems.bullet,
     Concord.systems.damage,
     Concord.systems.death,
+    Concord.systems.sound,
     Concord.systems.draw
   )
 
   initializePlayer(self)
 
   for i=1,10 do
-    local entity = Concord.entity()
     local spritePath = 'characters.fella1_front'
-    entity:give(cmps.sprite, spritePath)
+    local entity = Concord.entity():assemble(Concord.assemblages.character, Vector(math.random(1000), math.random(1000)), spritePath, 'ai')
     entity:give(cmps.ai)
-    entity:give(cmps.health, 100)
-    entity:give(cmps.position, Vector(math.random(1000), math.random(1000)))
-    entity:give(cmps.velocity, Vector(0,0))
-    local quad = mediaManager.getSpriteQuad(spritePath)
-    local _, _, w, h = quad:getViewport()
-    entity:give(cmps.collision, w, h, 'ai')
-
     self.world:addEntity(entity)
   end
+
+  music = love.audio.newSource('media/music/ingame.mp3', 'stream')
+  music:setVolume(0.2)
+  music:play()
 end
 
 function game:update(dt)
@@ -63,6 +53,10 @@ end
 
 function game:draw()
   self.world:emit('draw')
+end
+
+function game:leave()
+  music:stop()
 end
 
 return game
