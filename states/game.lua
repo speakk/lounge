@@ -7,7 +7,7 @@ local game = {}
 local music
 
 local function initializePlayer(self)
-  local spritePath = 'characters.fella1_front'
+  local spritePath = 'characters.lounge_game_player_front_face'
   local entity = Concord.entity():assemble(Concord.assemblages.character, Vector(math.random(1000), math.random(1000)), spritePath, 'player')
   entity:give(cmps.player)
   self.world:addEntity(entity)
@@ -34,7 +34,7 @@ function game:enter()
   initializePlayer(self)
 
   for i=1,10 do
-    local spritePath = 'characters.fella1_front'
+    local spritePath = 'characters.lounge_game_player_front_face'
     local entity = Concord.entity():assemble(Concord.assemblages.character, Vector(math.random(1000), math.random(1000)), spritePath, 'ai')
     entity:give(cmps.ai)
     self.world:addEntity(entity)
@@ -55,6 +55,11 @@ end
 function game:draw()
   self.world:emit('draw')
 end
+
+function game:resize(w, h)
+  self.world:emit('resize', w, h)
+end
+
 
 function game:leave()
   music:stop()

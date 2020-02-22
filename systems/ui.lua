@@ -3,6 +3,14 @@ local helium = require 'libs.helium'
 local UISystem = Concord.system({cmps.player, "player"})
 
 local healthBar
+local healthBarW = 400
+local healthBarH = 30
+
+function recalcUIPositions(w, h)
+  print("recalcUIPositions")
+  healthBar.view.x = w/2 - healthBarW/2
+  healthBar.view.y = h - healthBarH*2
+end
 
 function UISystem:init()
   healthBar = function(param,state,view)
@@ -20,11 +28,11 @@ function UISystem:init()
     end
   end
 
-  local barW = 200
-  local barH = 30
-  healthBar = helium(healthBar)({maxHealth=100}, barW, barH)
+  healthBar = helium(healthBar)({maxHealth=100}, healthBarW, healthBarH)
   healthBar.state.health = 100
   healthBar:draw(400, 200)
+
+  recalcUIPositions(love.graphics.getDimensions())
 end
 
 function UISystem:damageTaken(entity, damage)
@@ -32,6 +40,10 @@ function UISystem:damageTaken(entity, damage)
     local newHealth = entity:get(cmps.health).health
     healthBar.state.health = newHealth
   end
+end
+
+function UISystem:resize(w, h)
+  recalcUIPositions(w, h)
 end
 
 return UISystem
