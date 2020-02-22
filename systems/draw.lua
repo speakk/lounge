@@ -1,4 +1,5 @@
 local mediaManager = require 'media.manager'
+local camera = require 'models.camera'
 
 local DrawSystem = Concord.system({cmps.sprite, cmps.position, 'sprites'}, {cmps.position, cmps.circle, 'circles'})
 
@@ -8,6 +9,7 @@ function DrawSystem:init(world)
 end
 
 function DrawSystem:draw()
+  camera:attach()
   love.graphics.clear(0,0,0,1)
   self.spriteBatch:clear()
   for i=1,#self.sprites do
@@ -42,6 +44,8 @@ function DrawSystem:draw()
 
     love.graphics.circle('fill', position.x, position.y, circleRadius)
   end
+
+  camera:detach()
 end
 
 return DrawSystem

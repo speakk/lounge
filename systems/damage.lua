@@ -8,6 +8,9 @@ function DamageSystem:damageTaken(entity, damage)
   if entity:has(cmps.health) then
     local healthC = entity:get(cmps.health)
     healthC.health = healthC.health - damage
+    if healthC.health < 0 then
+      self:getWorld():emit("death", entity)
+    end
   end
 
   if entity:has(cmps.color) and entity:get(cmps.color).tween then
@@ -20,6 +23,7 @@ function DamageSystem:damageTaken(entity, damage)
 
   local tween = flux.to(entity:get(cmps.color).color, 4, {[1] = 1, [2] = 1, [3] = 1, [4] = 1})
   entity:get(cmps.color).tween = tween
+
 end
 
 return DamageSystem

@@ -1,4 +1,5 @@
 local flux = require 'libs.flux'
+local Timer = require 'libs.hump.timer'
 local Vector = require 'libs.brinevector'
 local mediaManager = require 'media.manager'
 local game = {}
@@ -31,6 +32,7 @@ function game:enter()
     Concord.systems.collision,
     Concord.systems.bullet,
     Concord.systems.damage,
+    Concord.systems.death,
     Concord.systems.draw
   )
 
@@ -54,6 +56,7 @@ end
 
 function game:update(dt)
   flux.update(dt)
+  Timer.update(dt)
   self.world:emit('resetVelocities')
   self.world:emit('update', dt)
 end

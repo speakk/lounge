@@ -4,6 +4,10 @@ local mediaDB = {
   {
     name = "characters",
     items = { 'fella1_front' },
+  },
+  {
+    name = "decals",
+    items = { 'lounge_game_blood_splat' },
   }
 }
 
