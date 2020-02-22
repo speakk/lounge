@@ -7,7 +7,7 @@ local game = {}
 local music
 
 local function initializePlayer(self)
-  local spritePath = 'characters.lounge_game_player_front_face'
+  local spritePath = 'characters.playerFront'
   local entity = Concord.entity():assemble(Concord.assemblages.character, Vector(math.random(1000), math.random(1000)), spritePath, 'player')
   entity:give(cmps.player)
   self.world:addEntity(entity)
@@ -17,8 +17,11 @@ function game:enter()
   print("game enter")
   self.world = Concord.world()
 
+  initializePlayer(self)
+
   self.world:addSystems(
     Concord.systems.input,
+    Concord.systems.wave,
     Concord.systems.ai,
     Concord.systems.player,
     Concord.systems.move,
@@ -28,17 +31,10 @@ function game:enter()
     Concord.systems.death,
     Concord.systems.sound,
     Concord.systems.ui,
+    Concord.systems.animation,
     Concord.systems.draw
   )
 
-  initializePlayer(self)
-
-  for i=1,10 do
-    local spritePath = 'characters.lounge_game_player_front_face'
-    local entity = Concord.entity():assemble(Concord.assemblages.character, Vector(math.random(1000), math.random(1000)), spritePath, 'ai')
-    entity:give(cmps.ai)
-    self.world:addEntity(entity)
-  end
 
   music = love.audio.newSource('media/music/ingame.mp3', 'stream')
   music:setVolume(0.2)
