@@ -1,4 +1,5 @@
-local Vector = require('libs.brinevector')
+local Vector = require 'libs.brinevector'
+local bump = require 'libs.bump'
 
 local MoveSystem = Concord.system({cmps.position, cmps.velocity})
 
@@ -17,8 +18,11 @@ function MoveSystem:update(dt)
     local position = entity:get(cmps.position)
     local velocity = entity:get(cmps.velocity).vector.copy
 
-    position.vector = position.vector + velocity * dt
-    self:getWorld():emit("entityMoved", entity, position.vector, velocity)
+    if not entity:has(cmps.collision) then
+      position.vector = position.vector + velocity * dt
+    end
+
+    self:getWorld():emit("entityMoving", entity, position.vector, velocity, dt)
   end
 end
 

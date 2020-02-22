@@ -1,12 +1,17 @@
 local Vector = require 'libs.brinevector'
+local mediaManager = require 'media.manager'
 local game = {}
 
 local function initializePlayer(self)
   local entity = Concord.entity()
 
-  entity:give(cmps.sprite, 'characters.fella1_front')
+  local spritePath = 'characters.fella1_front'
+  entity:give(cmps.sprite, spritePath)
   entity:give(cmps.position, Vector(100, 100))
   entity:give(cmps.velocity)
+  local quad = mediaManager.getSpriteQuad(spritePath)
+  local _, _, w, h = quad:getViewport()
+  entity:give(cmps.collision, w, h, "player")
   entity:give(cmps.player)
 
   self.world:addEntity(entity)
@@ -21,6 +26,8 @@ function game:enter()
     Concord.systems.ai,
     Concord.systems.player,
     Concord.systems.move,
+    Concord.systems.collision,
+    Concord.systems.bullet,
     Concord.systems.draw
   )
 
@@ -28,10 +35,14 @@ function game:enter()
 
   for i=1,10 do
     local entity = Concord.entity()
-    entity:give(cmps.sprite, 'characters.fella1_front')
+    local spritePath = 'characters.fella1_front'
+    entity:give(cmps.sprite, spritePath)
     entity:give(cmps.ai)
     entity:give(cmps.position, Vector(math.random(1000), math.random(1000)))
     entity:give(cmps.velocity, Vector(0,0))
+    local quad = mediaManager.getSpriteQuad(spritePath)
+    local _, _, w, h = quad:getViewport()
+    entity:give(cmps.collision, w, h, 'ai')
 
     self.world:addEntity(entity)
   end

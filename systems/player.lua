@@ -1,14 +1,21 @@
+local Timer = require 'libs.hump.timer'
 local Vector = require 'libs.brinevector'
 
 local PlayerSystem = Concord.system({cmps.position, cmps.velocity, cmps.player})
 
 local speed = 200
 
+local bulletDelay = 0.3
+local bulletTimer = Timer.new()
+local allowedToShoot = true
+
 function PlayerSystem:update(dt)
   for i=1,#self.pool do
     local entity = self.pool[i]
     entity:get(cmps.velocity).vector = entity:get(cmps.velocity).vector.normalized * speed
   end
+
+  bulletTimer:update(dt)
 end
 
 function PlayerSystem:moveLeft()
@@ -39,15 +46,24 @@ function PlayerSystem:moveDown()
   end
 end
 
+
 function PlayerSystem:shoot()
-  local bulletVelocity = 300
-  for i=1,#self.pool do
-    local player = self.pool[i]
-    local from = player:get(cmps.position).vector.copy + Vector(20,40)
-    local target = Vector(love.mouse.getX(), love.mouse.getY())
-    local startVelocity = (target - from).normalized * bulletVelocity
-    local bullet = Concord.entity():assemble(Concord.assemblages.bullet, from, startVelocity)
-    self:getWorld():addEntity(bullet)
+  print("Shooting", allowedToShoot)
+  if allowedToShoot then
+    local bulletVelocity = 300
+    for i=1,#self.pool do
+      local player = self.pool[i]
+      local from = player:get(cmps.position).vector.copy + Vector(20,40)
+      local target = Vector(love.mouse.getX(), love.mouse.getY())
+      local startVelocity = (target - from).normalized * bulletVelocity
+      -- TODO: 10 is bullet damage. Get it from player gun
+      local bullet = Concord.entity():assemble(Concord.assemblages.bullet, from, startVelocity, 10, {"player", "bullet"})
+      self:getWorld():addEntity(bullet)
+    end
+
+    allowedToShoot = false
+    print("Setting after", bulletDelay)
+    bulletTimer:after(bulletDelay, function() allowedToShoot = true end)
   end
 end
 

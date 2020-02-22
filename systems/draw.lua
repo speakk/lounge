@@ -11,12 +11,18 @@ function DrawSystem:draw()
   love.graphics.clear(0,0,0,1)
   self.spriteBatch:clear()
   for i=1,#self.sprites do
-    local spriteEntity = self.sprites[i]
-    local spritePath = spriteEntity:get(cmps.sprite).path
-    local position = spriteEntity:get(cmps.position).vector
+    local entity = self.sprites[i]
+    local spritePath = entity:get(cmps.sprite).path
+    local position = entity:get(cmps.position).vector
 
     local quad = mediaManager.getSpriteQuad(spritePath)
     local _, _, w, h = quad:getViewport()
+
+    if entity:has(cmps.color) then
+      self.spriteBatch:setColor(entity:get(cmps.color).color)
+    else
+      self.spriteBatch:setColor(1,1,1,1)
+    end
 
     self.spriteBatch:add(quad, position.x, position.y)
   end
@@ -24,9 +30,15 @@ function DrawSystem:draw()
   love.graphics.draw(self.spriteBatch)
 
   for i=1,#self.circles do
-    local circleEntity = self.circles[i]
-    local position = circleEntity:get(cmps.position).vector
-    local circleRadius = circleEntity:get(cmps.circle).radius
+    local entity = self.circles[i]
+    local position = entity:get(cmps.position).vector
+    local circleRadius = entity:get(cmps.circle).radius
+
+    if entity:has(cmps.color) then
+      love.graphics.setColor(entity:get(cmps.color).color)
+    else
+      love.graphics.setColor(1,1,1,1)
+    end
 
     love.graphics.circle('fill', position.x, position.y, circleRadius)
   end
