@@ -27,6 +27,7 @@ function game:enter()
     Concord.systems.damage,
     Concord.systems.death,
     Concord.systems.sound,
+    Concord.systems.ui,
     Concord.systems.draw
   )
 

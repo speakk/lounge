@@ -18,9 +18,10 @@ function BulletSystem:bulletCollision(first, second)
   bullet:destroy()
 end
 
-function BulletSystem:bulletShot(from, startVelocity)
+function BulletSystem:bulletShot(from, startVelocity, ignoreGroups)
+  table.insert(ignoreGroups, "bullet")
   -- TODO: 10 is bullet damage. Get it from player gun
-  local bullet = Concord.entity():assemble(Concord.assemblages.bullet, from, startVelocity, 10, {"player", "bullet"})
+  local bullet = Concord.entity():assemble(Concord.assemblages.bullet, from, startVelocity, 10, ignoreGroups)
   self:getWorld():addEntity(bullet)
 end
 

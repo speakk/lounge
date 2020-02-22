@@ -60,7 +60,7 @@ function PlayerSystem:shoot()
       local from = player:get(cmps.position).vector.copy + Vector(20,40)
       local target = Vector(camera:mousePosition())
       local startVelocity = (target - from).normalized * bulletVelocity
-      self:getWorld():emit("bulletShot", from, startVelocity)
+      self:getWorld():emit("bulletShot", from, startVelocity, {"player"})
     end
 
     allowedToShoot = false
