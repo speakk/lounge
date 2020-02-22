@@ -46,14 +46,12 @@ function CollisionSystem:entityMoving(entity, position, velocity, dt)
   entity:get(cmps.position).vector = Vector(actualX, actualY)
 
   for i=1,len do
-    print("Emitting collision", entity, cols[i].other)
     self:getWorld():emit("collision", entity, cols[i].other)
   end
 end
 
 function CollisionSystem:collision(first, second)
   if first:has(cmps.bullet) or second:has(cmps.bullet) then
-    print("Emitting bulletCollision", first, second)
     self:getWorld():emit("bulletCollision", first, second)
   end
 end

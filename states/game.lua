@@ -1,3 +1,4 @@
+local flux = require 'libs.flux'
 local Vector = require 'libs.brinevector'
 local mediaManager = require 'media.manager'
 local game = {}
@@ -9,6 +10,7 @@ local function initializePlayer(self)
   entity:give(cmps.sprite, spritePath)
   entity:give(cmps.position, Vector(100, 100))
   entity:give(cmps.velocity)
+  entity:give(cmps.health, 100)
   local quad = mediaManager.getSpriteQuad(spritePath)
   local _, _, w, h = quad:getViewport()
   entity:give(cmps.collision, w, h, "player")
@@ -28,6 +30,7 @@ function game:enter()
     Concord.systems.move,
     Concord.systems.collision,
     Concord.systems.bullet,
+    Concord.systems.damage,
     Concord.systems.draw
   )
 
@@ -38,6 +41,7 @@ function game:enter()
     local spritePath = 'characters.fella1_front'
     entity:give(cmps.sprite, spritePath)
     entity:give(cmps.ai)
+    entity:give(cmps.health, 100)
     entity:give(cmps.position, Vector(math.random(1000), math.random(1000)))
     entity:give(cmps.velocity, Vector(0,0))
     local quad = mediaManager.getSpriteQuad(spritePath)
@@ -49,6 +53,7 @@ function game:enter()
 end
 
 function game:update(dt)
+  flux.update(dt)
   self.world:emit('resetVelocities')
   self.world:emit('update', dt)
 end

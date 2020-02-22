@@ -3,9 +3,9 @@ local Vector = require 'libs.brinevector'
 
 local PlayerSystem = Concord.system({cmps.position, cmps.velocity, cmps.player})
 
-local speed = 200
+local speed = 400
 
-local bulletDelay = 0.3
+local bulletDelay = 0.1
 local bulletTimer = Timer.new()
 local allowedToShoot = true
 
@@ -48,7 +48,6 @@ end
 
 
 function PlayerSystem:shoot()
-  print("Shooting", allowedToShoot)
   if allowedToShoot then
     local bulletVelocity = 300
     for i=1,#self.pool do
@@ -62,7 +61,6 @@ function PlayerSystem:shoot()
     end
 
     allowedToShoot = false
-    print("Setting after", bulletDelay)
     bulletTimer:after(bulletDelay, function() allowedToShoot = true end)
   end
 end

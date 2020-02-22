@@ -14,7 +14,6 @@ function BulletSystem:bulletCollision(first, second)
     other = first
   end
 
-  print("Emitting damageTaken")
   self:getWorld():emit("damageTaken", other, bullet:get(cmps.bullet).damage)
   bullet:destroy()
 end
