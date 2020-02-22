@@ -37,8 +37,13 @@ function game:enter()
 
 
   music = love.audio.newSource('media/music/ingame.mp3', 'stream')
-  music:setVolume(0.2)
+  music:setVolume(0.7)
+  music:setLooping(true)
   music:play()
+end
+
+function game:leave()
+  self.world = nil
 end
 
 function game:update(dt)

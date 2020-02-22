@@ -1,4 +1,4 @@
-local Gamestate = require("libs.hump.gamestate")
+local Gamestate = require 'libs.hump.gamestate'
 
 local windowWidth = 1000
 local windowHeight = 800

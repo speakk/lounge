@@ -1,5 +1,8 @@
+local Gamestate = require 'libs.hump.gamestate'
 local Timer = require 'libs.hump.timer'
 local Vector = require 'libs.brinevector'
+
+local death = require 'states.death'
 
 local DeathSystem = Concord.system()
 
@@ -11,6 +14,10 @@ function DeathSystem:death(entity)
   Timer.after(10, function() blood:destroy() end)
 
   self:getWorld():addEntity(blood)
+
+  if entity:has(cmps.player) then
+    Gamestate.push(death)
+  end
 end
 
 return DeathSystem

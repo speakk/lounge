@@ -82,7 +82,8 @@ function mainMenu:init()
   recalcMenuPositions(self.ui, love.graphics.getDimensions())
 
   music = love.audio.newSource('media/music/menu.mp3', 'stream')
-  music:setVolume(0.2)
+  music:setVolume(0.7)
+  music:setLooping(true)
   music:play()
 end
 

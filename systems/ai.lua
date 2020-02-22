@@ -9,6 +9,7 @@ local bulletVelocity = 300
 
 function AISystem:update(dt)
   local player = self.player[1]
+  if not player then return end
   local target = player:get(cmps.position).vector.copy
 
   for i=1,#self.pool do
