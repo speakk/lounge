@@ -2,11 +2,13 @@ local Gamestate = require 'libs.hump.gamestate'
 
 local UISystem = Concord.system({cmps.player, "player"})
 
+local levelFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", 64)
+
 local healthBar
 local healthBarW = 400
 local healthBarH = 30
 
-local backgroundColor = { 0.3, 0.4, 0.5 }
+local backgroundColor = { 0.3, 0.2, 0.5 }
 local filledColor = { 0.8, 0.4, 0.5 }
 
 function drawHealthBar(self, w, h)
@@ -26,8 +28,19 @@ function drawHealthBar(self, w, h)
   love.graphics.rectangle('fill', view.x, view.y, width, healthBarH, 5, 5)
 end
 
+function drawCurrentLevel(self, w, h)
+  local currentLevel = Gamestate.current().currentLevel
+  if currentLevel then
+    love.graphics.setColor(0.5,1,0.5,1)
+    love.graphics.setFont(levelFont)
+    love.graphics.printf("Wave: " .. currentLevel, 0, 10, w, 'center')
+  end
+end
+
 function UISystem:draw()
-  drawHealthBar(self, love.graphics.getDimensions())
+  local w, h = love.graphics.getDimensions()
+  drawHealthBar(self, w, h)
+  drawCurrentLevel(self, w, h)
 end
 
 -- function UISystem:damageTaken(entity, damage)
