@@ -1,8 +1,10 @@
+local Gamestate = require 'libs.hump.gamestate'
 local flux = require 'libs.flux'
 local Timer = require 'libs.hump.timer'
 local Vector = require 'libs.brinevector'
 local mediaManager = require 'media.manager'
 local game = {}
+
 
 local music
 
@@ -14,11 +16,12 @@ local function initializePlayer(self)
 end
 
 function game:enter()
-  print("game enter")
+  print("game enter", self)
   self.world = Concord.world()
   print("World", self.world)
   
   self.currentLevel = 1
+  self.isDead = false
   self.playerMaxHealth = 100
   self.playerHealth = self.playerMaxHealth
 
@@ -48,14 +51,11 @@ function game:enter()
 end
 
 function game:leave()
-  print("leaving game")
-  self:clear()
-end
-
-function game:clear()
-  print("GAME CLEAR", self)
+  print("leaving game", self.world)
   self.world:clear()
+  --self.world = nil
   Timer.clear()
+  music:stop()
 end
 
 function game:huh()
@@ -63,10 +63,14 @@ function game:huh()
 end
 
 function game:update(dt)
-  flux.update(dt)
-  Timer.update(dt)
-  self.world:emit('resetVelocities')
-  self.world:emit('update', dt)
+  if self.isDead then
+    Gamestate.switch(require 'states.death')
+  else
+    flux.update(dt)
+    Timer.update(dt)
+    self.world:emit('resetVelocities')
+    self.world:emit('update', dt)
+  end
 end
 
 function game:draw()
@@ -76,11 +80,6 @@ end
 
 function game:resize(w, h)
   self.world:emit('resize', w, h)
-end
-
-
-function game:leave()
-  music:stop()
 end
 
 return game

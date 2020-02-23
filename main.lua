@@ -21,9 +21,11 @@ local gameStates = {
   mainMenu = require("states.mainMenu")
 }
 
-Gamestate.registerEvents()
---Gamestate.switch({
---  draw = function() end,
---  currentLevel = 3
---})
-Gamestate.switch(gameStates.mainMenu)
+function love.load()
+  Gamestate.registerEvents()
+  --Gamestate.switch({
+  --  draw = function() end,
+  --  currentLevel = 3
+  --})
+  Gamestate.switch(gameStates.mainMenu)
+end

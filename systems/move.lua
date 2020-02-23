@@ -13,7 +13,7 @@ function MoveSystem:resetVelocities()
 end
 
 function MoveSystem:update(dt)
-  for i=1,#self.pool do
+  for i=1,self.pool.size do
     local entity = self.pool[i]
     local position = entity:get(cmps.position)
     local velocity = entity:get(cmps.velocity).vector.copy
