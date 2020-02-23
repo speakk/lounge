@@ -18,7 +18,8 @@ function DeathSystem:death(entity)
   if entity:has(cmps.player) then
     if Gamestate.current() ~= death then
       print("ENTERING DEATH")
-      Gamestate.push(death)
+      --Gamestate.push(death)
+      Gamestate.switch(death)
     end
   end
 end

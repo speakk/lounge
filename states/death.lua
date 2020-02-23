@@ -36,12 +36,12 @@ function death:enter(from)
     input('clicked', function()
       state.pressed = true
       print("Leave??")
-      self.from:clear()
-      Gamestate.pop()
-      print("After pop!")
+      --self.from:clear()
+      -- Gamestate.pop()
+      -- print("After pop!")
 
-      -- Re-enter to start over
-      Gamestate.switch({})
+      -- -- Re-enter to start over
+      -- Gamestate.switch({})
       Gamestate.switch(game)
     end)
 
@@ -85,13 +85,19 @@ function death:enter(from)
 end
 
 function death:draw()
-  self.from:draw()
+  --self.from:draw()
 
-  love.graphics.setColor(1,1,1,1)
-  love.graphics.setFont(headerFont)
   local w, h = love.graphics.getDimensions()
+  love.graphics.setFont(headerFont)
+  love.graphics.setColor(0.05,0.1,0.3,1)
+  love.graphics.printf("You are deceased", 0+6, 80, w, 'center')
+  love.graphics.setColor(0.1,0.4,0.2,1)
+  love.graphics.printf("You are deceased", 0+3, 80, w, 'center')
+  love.graphics.setColor(1,1,1,1)
   love.graphics.printf("You are deceased", 0, 80, w, 'center')
   love.graphics.setFont(subHeaderFont)
+  love.graphics.setColor(0, 0, 0, 0.5)
+  love.graphics.printf("You made it to level " .. self.from.currentLevel, 0+5, 400+5, w, 'center')
   love.graphics.setColor(0.8,1,0.6,1)
   love.graphics.printf("You made it to level " .. self.from.currentLevel, 0, 400, w, 'center')
 end

@@ -1,5 +1,7 @@
 local Vector = require 'libs.brinevector'
 
+local mediaManager = require 'media.manager'
+
 local AISystem = Concord.system({cmps.position, cmps.velocity, cmps.ai}, {cmps.position, cmps.player, "player"})
 
 local speed = 300
@@ -14,7 +16,8 @@ function AISystem:update(dt)
 
   for i=1,#self.pool do
     local entity = self.pool[i]
-    local from = entity:get(cmps.position).vector.copy
+    local gunMuzzle = mediaManager.getSprite(entity:get(cmps.sprite).path).hotPoints.gunMuzzle
+    local from = entity:get(cmps.position).vector.copy + Vector(gunMuzzle[1], gunMuzzle[2])
     local angle = (target - from).normalized
     local velocityC = entity:get(cmps.velocity)
     velocityC.vector = (angle) * speed

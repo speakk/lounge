@@ -32,6 +32,10 @@ local mediaDB = {
       {
         name = 'bloodSplat',
         fileName = 'lounge_game_blood_splat'
+      },
+      {
+        name = 'bullet',
+        fileName = 'bullet'
       }
     }
   }

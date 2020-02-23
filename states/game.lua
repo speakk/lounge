@@ -16,6 +16,7 @@ end
 function game:enter()
   print("game enter")
   self.world = Concord.world()
+  print("World", self.world)
   
   self.currentLevel = 1
   self.playerMaxHealth = 100
@@ -34,9 +35,9 @@ function game:enter()
     Concord.systems.damage,
     Concord.systems.death,
     Concord.systems.sound,
-    Concord.systems.ui,
     Concord.systems.animation,
-    Concord.systems.draw
+    Concord.systems.draw,
+    Concord.systems.ui
   )
 
 
@@ -51,7 +52,7 @@ function game:leave()
 end
 
 function game:clear()
-  print("GAME CLEAR")
+  print("GAME CLEAR", self)
   self.world:clear()
   Timer.clear()
 end
