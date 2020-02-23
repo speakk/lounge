@@ -40,7 +40,6 @@ function AISystem:update(dt)
   for i=1,#self.pool do
     local entity = self.pool[i]
     local aiType = entity:get(cmps.ai).type
-    print("aiType", aiType)
     aiHandlers[aiType](entity, target, self)
   end
 end
