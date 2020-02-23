@@ -8,7 +8,7 @@ local music
 
 local function initializePlayer(self)
   local spritePath = 'characters.playerFront'
-  local entity = Concord.entity():assemble(Concord.assemblages.character, Vector(math.random(1000), math.random(1000)), spritePath, 'player')
+  local entity = Concord.entity():assemble(Concord.assemblages.character, Vector(math.random(1000), math.random(1000)), spritePath, 'player', nil, self.playerMaxHealth)
   entity:give(cmps.player)
   self.world:addEntity(entity)
 end
@@ -16,7 +16,10 @@ end
 function game:enter()
   print("game enter")
   self.world = Concord.world()
+  
   self.currentLevel = 1
+  self.playerMaxHealth = 100
+  self.playerHealth = self.playerMaxHealth
 
   initializePlayer(self)
 

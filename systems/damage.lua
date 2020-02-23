@@ -1,4 +1,5 @@
 local flux = require 'libs.flux'
+local Gamestate = require 'libs.hump.gamestate'
 
 local DamageSystem = Concord.system()
 
@@ -8,6 +9,11 @@ function DamageSystem:damageTaken(entity, damage)
   if entity:has(cmps.health) then
     local healthC = entity:get(cmps.health)
     healthC.health = healthC.health - damage
+
+    if entity:has(cmps.player) then
+      Gamestate.current().playerHealth = healthC.health
+    end
+
     if healthC.health < 0 then
       self:getWorld():emit("death", entity)
     end
