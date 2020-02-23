@@ -16,6 +16,7 @@ end
 function game:enter()
   print("game enter")
   self.world = Concord.world()
+  self.currentLevel = 1
 
   initializePlayer(self)
 
@@ -43,7 +44,17 @@ function game:enter()
 end
 
 function game:leave()
-  self.world = nil
+  self:clear()
+end
+
+function game:clear()
+  print("GAME CLEAR")
+  self.world:clear()
+  Timer.clear()
+end
+
+function game:huh()
+  print("HUH")
 end
 
 function game:update(dt)
@@ -54,6 +65,7 @@ function game:update(dt)
 end
 
 function game:draw()
+  --love.graphics.clear(0,0,0,1)
   self.world:emit('draw')
 end
 

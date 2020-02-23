@@ -10,8 +10,8 @@ end
 
 function DrawSystem:draw()
   camera:attach()
-  love.graphics.clear(0,0,0,1)
   self.spriteBatch:clear()
+  love.graphics.setColor(1,1,1,1)
   for i=1,#self.sprites do
     local entity = self.sprites[i]
     local spritePath = entity:get(cmps.sprite).path
@@ -20,10 +20,10 @@ function DrawSystem:draw()
     local quad = mediaManager.getSpriteQuad(spritePath)
     local _, _, w, h = quad:getViewport()
 
+    self.spriteBatch:setColor(1,1,1,1)
+
     if entity:has(cmps.color) then
       self.spriteBatch:setColor(entity:get(cmps.color).color)
-    else
-      self.spriteBatch:setColor(1,1,1,1)
     end
 
     self.spriteBatch:add(quad, position.x, position.y)

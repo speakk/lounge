@@ -1,10 +1,11 @@
 local Timer = require 'libs.hump.timer'
 local Vector = require 'libs.brinevector'
 
+local Gamestate = require 'libs.hump.gamestate'
+
 local WaveSystem = Concord.system({cmps.player, 'player'})
 
 local waveLength = 10
-local currentLevel = 1
 
 function WaveSystem:generateWave()
   print("generateWave")
@@ -16,7 +17,7 @@ function WaveSystem:generateWave()
     playerPosition = Vector(0,0)
   end
 
-  for i=1,currentLevel do
+  for i=1,Gamestate.current().currentLevel do
     local spritePath = 'characters.playerFront'
     local plusOrMinus = 1
     local minDistance = 100
@@ -35,7 +36,7 @@ function WaveSystem:init()
   Timer.after(waveLength, function(func)
     self:generateWave()
     waveLength = waveLength - 1
-    currentLevel = currentLevel + 1
+    Gamestate.current().currentLevel = Gamestate.current().currentLevel + 1
     Timer.after(waveLength, func)
   end)
 end

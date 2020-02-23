@@ -17,8 +17,13 @@ Concord.loadAssemblages("assemblages")
 
 local gameStates = {
   game = require("states.game"),
+  death = require("states.death"),
   mainMenu = require("states.mainMenu")
 }
 
 Gamestate.registerEvents()
+--Gamestate.switch({
+--  draw = function() end,
+--  currentLevel = 3
+--})
 Gamestate.switch(gameStates.mainMenu)
