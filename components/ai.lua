@@ -1,3 +1,4 @@
-return Concord.component(function(component)
+return Concord.component(function(component, type)
+  component.type = type
 end)
 

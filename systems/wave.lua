@@ -23,8 +23,9 @@ function WaveSystem:generateWave()
     local minDistance = 100
     if math.random() > 0.5 then plusOrMinus = -1 end
     local position = playerPosition + (Vector(math.random(300),math.random(300)) + Vector(minDistance, minDistance)) * plusOrMinus
-    local entity = Concord.entity():assemble(Concord.assemblages.character, position, spritePath, 'ai')
-    entity:give(cmps.ai)
+    local type = 'serpent'
+    if math.random() > 0.5 then type = 'attacker' end
+    local entity = Concord.entity():assemble(Concord.assemblages[type], position, spritePath, 'ai')
     self:getWorld():addEntity(entity)
   end
 

@@ -64,7 +64,7 @@ function PlayerSystem:shoot()
       local gunMuzzle = mediaManager.getSprite(player:get(cmps.sprite).path).hotPoints.gunMuzzle
       local from = player:get(cmps.position).vector.copy + Vector(gunMuzzle[1], gunMuzzle[2])
       local target = Vector(camera:mousePosition())
-      local startVelocity = (target - from).normalized * bulletVelocity + player:get(cmps.velocity).vector * bulletVelocity
+      local startVelocity = (target - from).normalized * bulletVelocity
       self:getWorld():emit("bulletShot", from, startVelocity, {"player"})
     end
 

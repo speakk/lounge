@@ -9,9 +9,7 @@ local game = {}
 local music
 
 local function initializePlayer(self)
-  local spritePath = 'characters.playerFront'
-  local entity = Concord.entity():assemble(Concord.assemblages.character, Vector(math.random(1000), math.random(1000)), spritePath, 'player', nil, self.playerMaxHealth)
-  entity:give(cmps.player)
+  local entity = Concord.entity():assemble(Concord.assemblages.player, Vector(math.random(1000), math.random(1000)), spritePath, 'player', nil, self.playerMaxHealth)
   self.world:addEntity(entity)
 end
 
@@ -67,6 +65,7 @@ end
 function game:update(dt)
   if self.isDead then
     --Gamestate.switch(require 'states.death')
+    music:pause()
     Gamestate.push(require 'states.death')
   else
     flux.update(dt)

@@ -13,13 +13,23 @@ local levelBarH = 30
 local backgroundColor = { 0.3, 0.2, 0.5 }
 local filledColor = { 0.8, 0.4, 0.5 }
 
-function drawProgressBar(x, y, w, h, color, backgroundColor, progress, maxProgress)
+function drawProgressBar(x, y, w, h, color, backgroundColor, progress, maxProgress, vertical)
+  if not progress then return end
   love.graphics.setColor(backgroundColor)
   love.graphics.rectangle('fill', x, y, w, h, 5, 5)
 
   love.graphics.setColor(color)
-  local width = (progress/maxProgress) * w
-  love.graphics.rectangle('fill', x, y, width, h, 5, 5)
+  local width = w
+  local height = h
+  
+  if vertical then
+    height = (progress/maxProgress) * h
+    y = y + h - height
+  else
+    width = (progress/maxProgress) * w
+  end
+
+  love.graphics.rectangle('fill', x, y, width, height, 5, 5)
 end
 
 function drawHealthBar(self, w, h)
@@ -31,6 +41,18 @@ function drawHealthBar(self, w, h)
 
   if not playerHealth or playerHealth < 0 then return end
   drawProgressBar(x, y, healthBarW, healthBarH, filledColor, backgroundColor, playerHealth, playerMaxHealth)
+end
+
+function drawFrequencyBar(self, w, h)
+  local waveLength = Gamestate.current().waveLength
+  if not waveLength then return end
+
+  local minLength = 1
+
+  local x = w - 60
+  local y = 30
+
+  drawProgressBar(x, y, 30, h-60, { 0.3, 0.1, 0.7 }, { 0.2, 0.1, 0.2 }, 8-waveLength, 8, true)
 end
 
 function drawLevelBar(self, w, h)
@@ -58,6 +80,7 @@ function UISystem:draw()
   drawHealthBar(self, w, h)
   drawCurrentLevel(self, w, h)
   drawLevelBar(self, w, h)
+  drawFrequencyBar(self, w, h)
 end
 
 -- function UISystem:damageTaken(entity, damage)

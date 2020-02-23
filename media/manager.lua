@@ -24,6 +24,42 @@ local mediaDB = {
         fileName = 'lounge_game_player_back_face',
         hotPoints = { gunMuzzle = { 43, 30 } }
       },
+      {
+        name = "attackerFront",
+        fileName = 'lounge_game_attacker_front_face',
+        hotPoints = { gunMuzzle = { 88, 95 } }
+      },
+      {
+        name = "attackerLeft",
+        fileName = 'lounge_game_attacker_left_face',
+        hotPoints = { gunMuzzle = { 1, 70 } }
+      },
+      {
+        name = "attackerRight",
+        fileName = 'lounge_game_attacker_right_face',
+        hotPoints = { gunMuzzle = { 130, 70 } }
+      },
+      {
+        name = "attackerBack",
+        fileName = 'lounge_game_attacker_back_face',
+        hotPoints = { gunMuzzle = { 43, 30 } }
+      },
+      {
+        name = "serpentFront",
+        fileName = 'lounge_game_serpent_front'
+      },
+      {
+        name = "serpentLeft",
+        fileName = 'lounge_game_serpent_left'
+      },
+      {
+        name = "serpentRight",
+        fileName = 'lounge_game_serpent_right'
+      },
+      {
+        name = "serpentBack",
+        fileName = 'lounge_game_serpent_back'
+      },
     },
   },
   {

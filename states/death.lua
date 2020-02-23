@@ -14,6 +14,8 @@ local buttonH = 150
 
 local death = {}
 
+local music
+
 local function recalcUIPositions(w, h)
   print("recalcUIPositions")
   playButton.view.x = w/2 - buttonW/2
@@ -21,6 +23,11 @@ local function recalcUIPositions(w, h)
 end
 
 function death:enter(from)
+  music = love.audio.newSource('media/music/death.mp3', 'stream')
+  music:setVolume(0.7)
+  music:setLooping(true)
+  music:play()
+
   self.from = from
 
   local button = function(param,state,view)
@@ -112,6 +119,7 @@ function death:leave()
   print("LEAVING DEATH")
   playButton:undraw()
   playButton = nil
+  music:stop()
 end
 
 return death
