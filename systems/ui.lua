@@ -4,28 +4,44 @@ local UISystem = Concord.system({cmps.player, "player"})
 
 local levelFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", 64)
 
-local healthBar
 local healthBarW = 400
 local healthBarH = 30
 
+local levelBarW = 400
+local levelBarH = 30
+
 local backgroundColor = { 0.3, 0.2, 0.5 }
 local filledColor = { 0.8, 0.4, 0.5 }
+
+function drawProgressBar(x, y, w, h, color, backgroundColor, progress, maxProgress)
+  love.graphics.setColor(backgroundColor)
+  love.graphics.rectangle('fill', x, y, w, h, 5, 5)
+
+  love.graphics.setColor(color)
+  local width = (progress/maxProgress) * w
+  love.graphics.rectangle('fill', x, y, width, h, 5, 5)
+end
 
 function drawHealthBar(self, w, h)
   local playerHealth = Gamestate.current().playerHealth
   local playerMaxHealth = Gamestate.current().playerMaxHealth
 
-  local view = {}
-  view.x = w/2 - healthBarW/2
-  view.y = h - healthBarH*2
+  local x = w/2 - healthBarW/2
+  local y = h - healthBarH*2
 
   if not playerHealth or playerHealth < 0 then return end
-  love.graphics.setColor(backgroundColor)
-  love.graphics.rectangle('fill', view.x, view.y, healthBarW, healthBarH, 5, 5)
+  drawProgressBar(x, y, healthBarW, healthBarH, filledColor, backgroundColor, playerHealth, playerMaxHealth)
+end
 
-  love.graphics.setColor(filledColor)
-  local width = (playerHealth/playerMaxHealth) * healthBarW
-  love.graphics.rectangle('fill', view.x, view.y, width, healthBarH, 5, 5)
+function drawLevelBar(self, w, h)
+  local levelProgress = Gamestate.current().levelProgress
+
+  local x = w/2 - healthBarW/2
+  local y = 100
+
+  if not levelProgress then return end
+  drawProgressBar(x, y, healthBarW, healthBarH, { 0.2, 0.8, 0.2 }, { 0.1, 0.4, 0.2 }, levelProgress, 100)
+  --print(levelProgress)
 end
 
 function drawCurrentLevel(self, w, h)
@@ -41,6 +57,7 @@ function UISystem:draw()
   local w, h = love.graphics.getDimensions()
   drawHealthBar(self, w, h)
   drawCurrentLevel(self, w, h)
+  drawLevelBar(self, w, h)
 end
 
 -- function UISystem:damageTaken(entity, damage)

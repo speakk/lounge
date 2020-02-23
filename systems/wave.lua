@@ -33,11 +33,17 @@ end
 function WaveSystem:init()
   self:generateWave()
 
-  Timer.after(waveLength, function(func)
+  local currentState = Gamestate.current()
+
+  Timer.tween(currentState.waveLength, currentState, { levelProgress = 100 })
+  Timer.after(currentState.waveLength, function(func)
     self:generateWave()
-    waveLength = waveLength - 1
-    Gamestate.current().currentLevel = Gamestate.current().currentLevel + 1
-    Timer.after(waveLength, func)
+    currentState.levelProgress = 0
+    currentState.waveLength = currentState.waveLength - 1
+    if currentState.waveLength < 1 then currentState.waveLength = 1 end
+    currentState.currentLevel = currentState.currentLevel + 1
+    Timer.after(currentState.waveLength, func)
+    Timer.tween(currentState.waveLength, currentState, { levelProgress = 100 })
   end)
 end
 

@@ -8,8 +8,6 @@ local buttonFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", buttonFont
 local headerFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", headerFontSize)
 local subHeaderFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", 64)
 
-local game = require 'states.game'
-
 local playButton
 local buttonW = 320
 local buttonH = 150
@@ -37,12 +35,12 @@ function death:enter(from)
       state.pressed = true
       print("Leave??")
       --self.from:clear()
-      -- Gamestate.pop()
+      Gamestate.pop()
       -- print("After pop!")
 
       -- -- Re-enter to start over
-      -- Gamestate.switch({})
-      Gamestate.switch(game)
+      Gamestate.switch({})
+      Gamestate.switch(require 'states.game')
     end)
 
     state.color = defaultColor
@@ -85,7 +83,7 @@ function death:enter(from)
 end
 
 function death:draw()
-  --self.from:draw()
+  self.from:draw()
 
   local w, h = love.graphics.getDimensions()
   love.graphics.setFont(headerFont)

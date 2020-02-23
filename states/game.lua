@@ -17,14 +17,15 @@ end
 
 function game:enter()
   print("game enter", self)
-  self.world = Concord.world()
   print("World", self.world)
   
+  self.world = Concord.world()
   self.currentLevel = 1
+  self.levelProgress = 0
+  self.waveLength = 8
   self.isDead = false
   self.playerMaxHealth = 100
   self.playerHealth = self.playerMaxHealth
-
   initializePlayer(self)
 
   self.world:addSystems(
@@ -65,7 +66,8 @@ end
 
 function game:update(dt)
   if self.isDead then
-    Gamestate.switch(require 'states.death')
+    --Gamestate.switch(require 'states.death')
+    Gamestate.push(require 'states.death')
   else
     flux.update(dt)
     Timer.update(dt)

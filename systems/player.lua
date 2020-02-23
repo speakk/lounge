@@ -10,7 +10,10 @@ local PlayerSystem = Concord.system({cmps.position, cmps.velocity, cmps.player})
 local speed = 400
 
 local bulletDelay = 0.1
-local allowedToShoot = true
+
+function PlayerSystem:init()
+  self.allowedToShoot = true
+end
 
 function PlayerSystem:update(dt)
   for i=1,#self.pool do
@@ -54,19 +57,19 @@ end
 
 
 function PlayerSystem:shoot()
-  if allowedToShoot then
-    local bulletVelocity = 300
+  if self.allowedToShoot then
+    local bulletVelocity = 600
     for i=1,#self.pool do
       local player = self.pool[i]
       local gunMuzzle = mediaManager.getSprite(player:get(cmps.sprite).path).hotPoints.gunMuzzle
       local from = player:get(cmps.position).vector.copy + Vector(gunMuzzle[1], gunMuzzle[2])
       local target = Vector(camera:mousePosition())
-      local startVelocity = (target - from).normalized * bulletVelocity
+      local startVelocity = (target - from).normalized * bulletVelocity + player:get(cmps.velocity).vector * bulletVelocity
       self:getWorld():emit("bulletShot", from, startVelocity, {"player"})
     end
 
-    allowedToShoot = false
-    Timer.after(bulletDelay, function() allowedToShoot = true end)
+    self.allowedToShoot = false
+    Timer.after(bulletDelay, function() self.allowedToShoot = true end)
   end
 end
 
