@@ -48,6 +48,7 @@ function game:enter()
 end
 
 function game:leave()
+  print("leaving game")
   self:clear()
 end
 
