@@ -51,8 +51,9 @@ function game:enter()
 end
 
 function game:leave()
-  print("leaving game", self.world)
+  print("leaving game", self.world, #self.world.__entities)
   self.world:clear()
+  self.world:__flush()
   --self.world = nil
   Timer.clear()
   music:stop()

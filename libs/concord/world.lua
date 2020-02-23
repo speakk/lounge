@@ -274,12 +274,19 @@ end
 --- Removes all entities from the World
 -- @treturn World self
 function World:clear()
-   for i = 1, self.__entities.size do
-      self:removeEntity(self.__entities[i])
-   end
+   for i = self.__entities.size, 1, -1  do
+      local e = self.__entities[i]
 
-   for i = 1, self.__systems.size do
-      self.__systems[i]:__clear()
+      e.__world = nil
+      self.__entities:__remove(e)
+
+      for j = 1, self.__systems.size do
+         self.__systems[j]:__remove(e)
+      end
+
+      self:onEntityRemoved(e)
+
+      self:removeEntity(e)
    end
 
    return self
