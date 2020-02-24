@@ -7,15 +7,15 @@ function AnimationSystem:entityMoving(entity, position, velocity, dt)
     local characterSpriteSheet = entity:get(cmps.characterSpriteSheet)
     if math.abs(velocity.x) > math.abs(velocity.y) then
       if velocity.x >= 0 then
-        entity:get(cmps.sprite).path = characterSpriteSheet.right
+        entity:get(cmps.sprites).sprites = { { path = characterSpriteSheet.right } }
       else
-        entity:get(cmps.sprite).path = characterSpriteSheet.left
+        entity:get(cmps.sprites).sprites = { { path = characterSpriteSheet.left } }
       end
     else
       if velocity.y >= 0 then
-        entity:get(cmps.sprite).path = characterSpriteSheet.front
+        entity:get(cmps.sprites).sprites = { { path = characterSpriteSheet.front } }
       else
-        entity:get(cmps.sprite).path = characterSpriteSheet.back
+        entity:get(cmps.sprites).sprites = { { path = characterSpriteSheet.back } }
       end
     end
   end

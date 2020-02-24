@@ -8,7 +8,7 @@ local fpsFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", 16)
 
 local background = love.graphics.newImage('media/background/background.jpg')
 
-local DrawSystem = Concord.system({cmps.sprite, cmps.position, 'sprites'}, {cmps.position, cmps.circle, 'circles'}, {cmps.layer, cmps.sprite, 'layers'})
+local DrawSystem = Concord.system({cmps.sprites, cmps.position, 'sprites'}, {cmps.position, cmps.circle, 'circles'}, {cmps.layer, cmps.sprites, 'layers'})
 
 function initLayer(index, shader)
   return {
@@ -73,19 +73,23 @@ function DrawSystem:draw()
       --print("Layer", i, #layer.entities, layer.shader)
       for b=1,#layer.entities do
         local entity = layer.entities[b]
-        local spritePath = entity:get(cmps.sprite).path
-        local position = entity:get(cmps.position).vector
+        local sprites = entity:get(cmps.sprites).sprites
+        for p=1,#sprites do
+          local sprite = sprites[p]
+          local spritePath = sprite.path
+          local position = entity:get(cmps.position).vector
 
-        local quad = mediaManager.getSpriteQuad(spritePath)
-        local _, _, w, h = quad:getViewport()
+          local quad = mediaManager.getSpriteQuad(spritePath)
+          local _, _, w, h = quad:getViewport()
 
-        spriteBatch:setColor(1,1,1,1)
+          spriteBatch:setColor(1,1,1,1)
 
-        if entity:has(cmps.color) then
-          spriteBatch:setColor(entity:get(cmps.color).color)
+          if entity:has(cmps.color) then
+            spriteBatch:setColor(entity:get(cmps.color).color)
+          end
+
+          spriteBatch:add(quad, position.x + (sprite.x or 0), position.y + (sprite.y or 0))
         end
-
-        spriteBatch:add(quad, position.x, position.y)
       end
 
       love.graphics.draw(spriteBatch)
