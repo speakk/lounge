@@ -26,7 +26,7 @@ local aiHandlers = {
     if math.random() < shootChanceThreshold then
       if not target then return end
       local startVelocity = angle * bulletVelocity
-      self:getWorld():emit("bulletShot", from, startVelocity, {"ai"})
+      self:getWorld():emit("bulletShot", from, startVelocity, {"ai"}, 10)
     end
   end
 }

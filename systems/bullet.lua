@@ -2,26 +2,14 @@ local Vector = require 'libs.brinevector'
 
 local BulletSystem = Concord.system()
 
-function BulletSystem:bulletCollision(first, second)
-  local bullet
-  local other
-
-  if first:has(cmps.bullet) then
-    bullet = first
-    other = second
-  else
-    bullet = second
-    other = first
-  end
-
-  self:getWorld():emit("damageTaken", other, bullet:get(cmps.bullet).damage)
+function BulletSystem:bulletCollision(bullet, target)
+  self:getWorld():emit("damageTaken", target, bullet:get(cmps.bullet).damage)
   bullet:destroy()
 end
 
-function BulletSystem:bulletShot(from, startVelocity, ignoreGroups)
+function BulletSystem:bulletShot(from, startVelocity, ignoreGroups, damage)
   table.insert(ignoreGroups, "bullet")
-  -- TODO: 10 is bullet damage. Get it from player gun
-  local bullet = Concord.entity():assemble(Concord.assemblages.bullet, from, startVelocity, 10, ignoreGroups)
+  local bullet = Concord.entity():assemble(Concord.assemblages.bullet, from, startVelocity, damage, ignoreGroups)
   self:getWorld():addEntity(bullet)
 end
 

@@ -55,7 +55,7 @@ local nilEffect = function(func) func() end
 
 function DrawSystem:draw()
   camera:attach()
-  love.graphics.draw(background)
+  love.graphics.draw(background,-1000,-1000,0,2,2)
   love.graphics.setColor(1,1,1,1)
   for i=1,#layersSorted do
     local layer = layersSorted[i]

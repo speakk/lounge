@@ -13,4 +13,7 @@ return Concord.assemblage(function(entity, position, spritePath, collisionGroup,
       chance = 0.3,
     }
   })
+
+  entity:get(cmps.collision).event = "meleeAttack"
+  entity:get(cmps.collision).eventIgnoreGroups = { "ai" }
 end)

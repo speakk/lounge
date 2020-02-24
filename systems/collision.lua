@@ -1,5 +1,6 @@
 local Vector = require 'libs.brinevector'
 local bump = require 'libs.bump'
+local lume = require 'libs.lume'
 
 local CollisionSystem = Concord.system({cmps.collision, cmps.position})
 
@@ -21,10 +22,13 @@ function CollisionSystem:entityMoving(entity, position, velocity, dt)
   --local actualX, actualY, cols, len = world:move(item, goalX, goalY, <filter>)
   local goal = position + velocity * dt
   local actualX, actualY, cols, len = bumpWorld:move(entity, goal.x, goal.y, function(item, other)
-    local groupOne = item:get(cmps.collision).group
-    local groupSecond = other:get(cmps.collision).group
-    local ignoreGroupsOne = item:get(cmps.collision).ignoreGroups
-    local ignoreGroupsSecond = other:get(cmps.collision).ignoreGroups
+    local collisionCOne = item:get(cmps.collision)
+    local collisionCSecond = other:get(cmps.collision)
+
+    local groupOne = collisionCOne.group
+    local groupSecond = collisionCSecond.group
+    local ignoreGroupsOne = collisionCOne.ignoreGroups
+    local ignoreGroupsSecond = collisionCSecond.ignoreGroups
 
     local ignorePairs = {ignoreGroupsOne, groupSecond, ignoreGroupsSecond, groupOne}
 
@@ -32,16 +36,11 @@ function CollisionSystem:entityMoving(entity, position, velocity, dt)
       local groups = ignorePairs[i]
       local ignoreGroupOne = ignorePairs[i+1]
       for _, ignoreGroupSecond in ipairs(groups) do
-        --print("comparing1", ignoreGroup, groupSecond, groupOne)
         if ignoreGroupOne == ignoreGroupSecond then return false end
       end
     end
 
-    if item:has(cmps.bullet) or other:has(cmps.bullet) then
-      return "touch"
-    end
-
-    return "slide"
+    return collisionCOne.collisionResponse or "slide"
   end)
   entity:get(cmps.position).vector = Vector(actualX, actualY)
 
@@ -51,17 +50,35 @@ function CollisionSystem:entityMoving(entity, position, velocity, dt)
 end
 
 function CollisionSystem:collision(first, second)
-  if first:has(cmps.bullet) or second:has(cmps.bullet) then
-    self:getWorld():emit("bulletCollision", first, second)
+  local entities = {first, second}
+  for i = 1,#entities do
+    local entity = entities[i]
+    local collisionC = entity:get(cmps.collision)
+    local event = collisionC.event
+    if event then
+      local secondEntity = lume.filter(entities, function(ent) return ent ~= entity end)[1]
+      if collisionC.eventIgnoreGroups then
+        local secondEntityGroup = secondEntity:get(cmps.collision).group
+        for _, ignoreGroup in ipairs(collisionC.eventIgnoreGroups) do
+          if ignoreGroup == secondEntityGroup then return end
+        end
+      end
+
+      self:getWorld():emit(event, entity, secondEntity)
+    end
   end
 
-  if first:has(cmps.pickUp) then
-    self:getWorld():emit("pickUpReceived", second, first)
-  end
+  --if first:has(cmps.bullet) or second:has(cmps.bullet) then
+  --  self:getWorld():emit("bulletCollision", first, second)
+  --end
 
-  if second:has(cmps.pickUp) then
-    self:getWorld():emit("pickUpReceived", first, second)
-  end
+  --if first:has(cmps.pickUp) then
+  --  self:getWorld():emit("pickUpReceived", second, first)
+  --end
+
+  --if second:has(cmps.pickUp) then
+  --  self:getWorld():emit("pickUpReceived", first, second)
+  --end
 end
 
 return CollisionSystem

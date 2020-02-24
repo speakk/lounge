@@ -34,6 +34,7 @@ function game:enter()
     Concord.systems.move,
     Concord.systems.collision,
     Concord.systems.bullet,
+    Concord.systems.melee,
     Concord.systems.damage,
     Concord.systems.pickup,
     Concord.systems.death,
