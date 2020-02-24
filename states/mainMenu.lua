@@ -115,8 +115,9 @@ function mainMenu:draw()
 
   love.graphics.setFont(instructionFont)
   love.graphics.setColor(1,1,1,1)
-  love.graphics.printf("Survive as many waves as you can", 0, 290, w, 'center')
-  love.graphics.printf("The wave frequency increases with time", 0, 320, w, 'center')
+  love.graphics.printf("Survive as many waves as you can.", 0, 290, w, 'center')
+  love.graphics.printf("The wave frequency increases with time.", 0, 320, w, 'center')
+  love.graphics.printf("WASD to move, mouse to shoot and aim", 0, 350, w, 'center')
 end
   
 return mainMenu

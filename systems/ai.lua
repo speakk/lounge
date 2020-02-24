@@ -1,4 +1,5 @@
 local Vector = require 'libs.brinevector'
+local Timer = require 'libs.hump.timer'
 
 local mediaManager = require 'media.manager'
 
@@ -7,7 +8,8 @@ local AISystem = Concord.system({cmps.position, cmps.velocity, cmps.ai}, {cmps.p
 local speed = 300
 
 local shootChanceThreshold = 0.05
-local bulletVelocity = 300
+local bulletVelocity = 400
+local bulletDelay = 0.3
 
 local aiHandlers = {
   melee = function(entity, target, self)
@@ -24,10 +26,12 @@ local aiHandlers = {
     local velocityC = entity:get(cmps.velocity)
     velocityC.vector = (angle) * speed
 
-    if math.random() < shootChanceThreshold then
+    if entity.allowedToShoot == nil or entity.allowedToShoot then
+      entity.allowedToShoot = false
       if not target then return end
       local startVelocity = angle * bulletVelocity
       self:getWorld():emit("bulletShot", from, startVelocity, {"ai"}, 10)
+      Timer.after(bulletDelay, function() entity.allowedToShoot = true end)
     end
   end
 }
