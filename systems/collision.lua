@@ -54,6 +54,10 @@ function CollisionSystem:collision(first, second)
   if first:has(cmps.bullet) or second:has(cmps.bullet) then
     self:getWorld():emit("bulletCollision", first, second)
   end
+
+  if first:has(cmps.pickUp) then
+    self:getWorld():emit("pickUpReceived", second, first:get(cmps.pickUp))
+  end
 end
 
 return CollisionSystem

@@ -20,8 +20,9 @@ function initLayer(index, shader)
 end
 
 local layers = {
-  default = initLayer(3),
-  glow = initLayer(2, 'glow'),
+  default = initLayer(4),
+  glow = initLayer(3, 'glow'),
+  onGround = initLayer(2)
   ground = initLayer(1)
 }
 

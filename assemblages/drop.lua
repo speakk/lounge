@@ -1,0 +1,6 @@
+return Concord.assemblage(function(entity, position, spritePath, pickUpType)
+  entity:give(cmps.position, position)
+  entity:give(cmps.sprite, spritePath)
+  entity:give(cmps.layer, 'onGround')
+  entity:give(cmps.pickUp, type)
+end)
