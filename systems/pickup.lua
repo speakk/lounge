@@ -3,7 +3,7 @@ local PickupSystem = Concord.system()
 
 local pickUpHandlers = {
   frequency = function(self, pickUp, target)
-    Gamestate.current().waveLength = Gamestate.current().waveLength + 1
+    self:getWorld():emit("waveLengthChange", Gamestate.current().waveLength + 1)
   end,
   health = function(self, pickUp, target)
     self:getWorld():emit("healthGiven", target, pickUp:get(cmps.pickUp).params.amount)

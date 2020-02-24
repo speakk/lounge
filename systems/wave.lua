@@ -7,6 +7,11 @@ local WaveSystem = Concord.system({cmps.player, 'player'})
 
 local waveLength = 10
 
+function WaveSystem:waveLengthChange(newValue)
+  local currentState = Gamestate.current()
+  if currentState.waveLength < 1 then currentState.waveLength = 1 end
+end
+
 function WaveSystem:generateWave()
   print("generateWave")
 
@@ -40,8 +45,7 @@ function WaveSystem:init()
   Timer.after(currentState.waveLength, function(func)
     self:generateWave()
     currentState.levelProgress = 0
-    currentState.waveLength = currentState.waveLength - 1
-    if currentState.waveLength < 1 then currentState.waveLength = 1 end
+    self:waveLengthChange(currentState.waveLength - 1)
     currentState.currentLevel = currentState.currentLevel + 1
     Timer.after(currentState.waveLength, func)
     Timer.tween(currentState.waveLength, currentState, { levelProgress = 100 })
