@@ -11,5 +11,5 @@ return Concord.assemblage(function(entity, position, spritePath, collisionGroup,
   local _, _, w, h = quad:getViewport()
 
 
-  entity:give(cmps.collision, w, h, collisionGroup, collisionIgnoreGroups)
+  entity:give(cmps.collision, 0, 0, w, h, collisionGroup, collisionIgnoreGroups)
 end)

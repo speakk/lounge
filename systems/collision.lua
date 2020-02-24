@@ -10,7 +10,7 @@ function CollisionSystem:init()
   self.pool.onEntityAdded = function(pool, entity)
     local position = entity:get(cmps.position).vector
     local collisionC = entity:get(cmps.collision)
-    bumpWorld:add(entity, position.x,position.y,collisionC.w,collisionC.h)
+    bumpWorld:add(entity, position.x + collisionC.x,position.y + collisionC.y,collisionC.w,collisionC.h)
   end
 
   self.pool.onEntityRemoved = function(pool, entity)
@@ -57,6 +57,16 @@ function CollisionSystem:collision(first, second)
     local event = collisionC.event
     if event then
       local secondEntity = lume.filter(entities, function(ent) return ent ~= entity end)[1]
+      if collisionC.eventInclusionGroups then
+        local secondEntityGroup = secondEntity:get(cmps.collision).group
+        local wasInOne = false
+        for _, inclusionGroup in ipairs(collisionC.eventInclusionGroups) do
+          if inclusionGroup == secondEntityGroup then wasInOne = true end
+        end
+
+        if not wasInOne then return end
+      end
+
       if collisionC.eventIgnoreGroups then
         local secondEntityGroup = secondEntity:get(cmps.collision).group
         for _, ignoreGroup in ipairs(collisionC.eventIgnoreGroups) do

@@ -13,19 +13,25 @@ local function initializePlayer(self)
   self.world:addEntity(entity)
 end
 
+local function generateMap(self)
+  for i = 1,10 do
+    local entity = Concord.entity():assemble(Concord.assemblages.rock, Vector(math.random(2000) - 1000, math.random(2000) - 1000))
+    self.world:addEntity(entity)
+  end
+end
+
 function game:enter()
   print("game enter", self)
   print("World", self.world)
-  
-  self.world = Concord.world()
+
   self.currentLevel = 1
   self.levelProgress = 0
   self.waveLength = 8
   self.isDead = false
   self.playerMaxHealth = 100
   self.playerHealth = self.playerMaxHealth
-  initializePlayer(self)
-
+  
+  self.world = Concord.world()
   self.world:addSystems(
     Concord.systems.input,
     Concord.systems.wave,
@@ -43,6 +49,9 @@ function game:enter()
     Concord.systems.draw,
     Concord.systems.ui
   )
+
+  initializePlayer(self)
+  generateMap(self)
 
 
   music = love.audio.newSource('media/music/ingame.mp3', 'stream')

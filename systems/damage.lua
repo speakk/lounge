@@ -18,18 +18,18 @@ function DamageSystem:damageTaken(entity, damage)
     if healthC.health < 0 then
       self:getWorld():emit("death", entity)
     end
+
+    if entity:has(cmps.color) and entity:get(cmps.color).tween then
+      entity:get(cmps.color).tween:stop()
+    end
+
+    entity:ensure(cmps.color, damageColor)
+    -- Copy to make sure we don't change original damageColor
+    entity:get(cmps.color).color = {unpack(damageColor)}
+
+    local tween = flux.to(entity:get(cmps.color).color, 4, {[1] = 1, [2] = 1, [3] = 1, [4] = 1})
+    entity:get(cmps.color).tween = tween
   end
-
-  if entity:has(cmps.color) and entity:get(cmps.color).tween then
-    entity:get(cmps.color).tween:stop()
-  end
-
-  entity:ensure(cmps.color, damageColor)
-  -- Copy to make sure we don't change original damageColor
-  entity:get(cmps.color).color = {unpack(damageColor)}
-
-  local tween = flux.to(entity:get(cmps.color).color, 4, {[1] = 1, [2] = 1, [3] = 1, [4] = 1})
-  entity:get(cmps.color).tween = tween
 
 end
 

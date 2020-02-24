@@ -87,6 +87,15 @@ local mediaDB = {
         fileName = 'lounge_game_drop_heart'
       }
     }
+  },
+  {
+    name = "obstacles",
+    items = {
+      {
+        name = 'rock',
+        fileName = 'lounge_game_obstacle'
+      }
+    }
   }
 }
 

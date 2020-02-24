@@ -7,9 +7,9 @@ function BulletSystem:bulletCollision(bullet, target)
   bullet:destroy()
 end
 
-function BulletSystem:bulletShot(from, startVelocity, ignoreGroups, damage)
+function BulletSystem:bulletShot(from, startVelocity, ignoreGroups, damage, eventInclusionGroups)
   table.insert(ignoreGroups, "bullet")
-  local bullet = Concord.entity():assemble(Concord.assemblages.bullet, from, startVelocity, damage, ignoreGroups)
+  local bullet = Concord.entity():assemble(Concord.assemblages.bullet, from, startVelocity, damage, ignoreGroups, eventInclusionGroups)
   self:getWorld():addEntity(bullet)
 end
 
