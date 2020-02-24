@@ -74,6 +74,19 @@ local mediaDB = {
         fileName = 'bullet'
       }
     }
+  },
+  {
+    name = "drops",
+    items = {
+      {
+        name = 'frequency',
+        fileName = 'lounge_game_drop_hourglass'
+      },
+      {
+        name = 'health',
+        fileName = 'lounge_game_drop_heart'
+      }
+    }
   }
 }
 

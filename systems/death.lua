@@ -9,12 +9,14 @@ local DeathSystem = Concord.system()
 function DeathSystem:death(entity)
   local position = entity:get(cmps.position).vector.copy
 
-  if entity:has(cmps.drop) then
-    local drops = entity:get(cmps.drop).drop
+  if entity:has(cmps.dropOnDeath) then
+    local drops = entity:get(cmps.dropOnDeath).drops
+    print("drops", #drops)
 
     for i=1,#drops do
       local drop = drops[i]
       if math.random() < drop.chance then
+        print("Random less than chance, dropping")
         local type = drop.type
         local dropEntity = Concord.entity():assemble(Concord.assemblages[type], position + Vector(math.random(20), math.random(20)) - Vector(10, 10), unpack(drop.params or {}))
         self:getWorld():addEntity(dropEntity)

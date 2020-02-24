@@ -3,4 +3,10 @@ return Concord.assemblage(function(entity, position, spritePath, collisionGroup,
   entity:assemble(Concord.assemblages.character, position, spritePath, 'ai')
   entity:give(cmps.characterSpriteSheet, 'characters.attackerLeft','characters.attackerRight','characters.attackerFront','characters.attackerBack') 
   entity:give(cmps.ai, 'shooter')
+  entity:give(cmps.dropOnDeath, {
+    {
+      type = "frequencyDrop",
+      chance = 1,
+    }
+  })
 end)

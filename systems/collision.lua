@@ -56,7 +56,11 @@ function CollisionSystem:collision(first, second)
   end
 
   if first:has(cmps.pickUp) then
-    self:getWorld():emit("pickUpReceived", second, first:get(cmps.pickUp))
+    self:getWorld():emit("pickUpReceived", second, first)
+  end
+
+  if second:has(cmps.pickUp) then
+    self:getWorld():emit("pickUpReceived", first, second)
   end
 end
 
