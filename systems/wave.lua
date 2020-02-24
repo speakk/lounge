@@ -15,8 +15,6 @@ function WaveSystem:waveLengthChange(newValue)
 end
 
 function WaveSystem:generateWave()
-  print("generateWave")
-
   local playerPosition
   if self.player[1] then
     playerPosition = self.player[1]:get(cmps.position).vector

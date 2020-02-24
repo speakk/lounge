@@ -11,12 +11,10 @@ function DeathSystem:death(entity)
 
   if entity:has(cmps.dropOnDeath) then
     local drops = entity:get(cmps.dropOnDeath).drops
-    print("drops", #drops)
 
     for i=1,#drops do
       local drop = drops[i]
       if math.random() < drop.chance then
-        print("Random less than chance, dropping")
         local type = drop.type
         local dropEntity = Concord.entity():assemble(Concord.assemblages[type], position + Vector(math.random(20), math.random(20)) - Vector(10, 10), unpack(drop.params or {}))
         self:getWorld():addEntity(dropEntity)
@@ -35,9 +33,6 @@ function DeathSystem:death(entity)
   if entity:has(cmps.player) then
     if Gamestate.current() ~= death then
       Gamestate.current().isDead = true
-      print("ENTERING DEATH", Gamestate.current())
-      --Gamestate.push(death)
-      --Gamestate.switch(death)
     end
   end
 end

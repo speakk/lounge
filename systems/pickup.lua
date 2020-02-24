@@ -11,9 +11,7 @@ local pickUpHandlers = {
 }
 
 function PickupSystem:pickUpReceived(pickUp, target)
-  print(target, pickUp)
   local pickUpType = pickUp:get(cmps.pickUp).pickUpType
-  print(pickUpType)
   pickUpHandlers[pickUpType](self, pickUp, target)
 
   pickUp:destroy()

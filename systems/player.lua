@@ -31,8 +31,6 @@ function PlayerSystem:update(dt)
     local position = self.pool[1]:get(cmps.position).vector
     local velocity = self.pool[1]:get(cmps.velocity).vector
     camera:lockPosition(position.x, position.y, Camera.smooth.damped(10))
-    --print(velocity.length*zoomMultiplier)
-    --camera:zoomTo(1-velocity.length*zoomMultiplier)
     zoom = lume.smooth(zoom, 1-velocity.length*zoomMultiplier, zoomSpeed)
     camera:zoomTo(zoom)
   end

@@ -27,7 +27,6 @@ local layers = {
 }
 
 local layersSorted = lume.sort(lume.filter(layers, function() return true end), "index")
-print(#layersSorted)
 
 function DrawSystem:init(world)
   self.effects = {
@@ -36,7 +35,6 @@ function DrawSystem:init(world)
   }
 
   self.spriteBatch = love.graphics.newSpriteBatch(mediaManager.atlas, 500)
-  print("draw init")
 
   self.layers.onEntityAdded = function(pool, entity)
     local layerName = entity:get(cmps.layer).name
@@ -70,7 +68,6 @@ function DrawSystem:draw()
     -- end
 
     effect(function()
-      --print("Layer", i, #layer.entities, layer.shader)
       for b=1,#layer.entities do
         local entity = layer.entities[b]
         local sprites = entity:get(cmps.sprites).sprites
@@ -113,9 +110,9 @@ function DrawSystem:draw()
   -- end)
 
   camera:detach()
-  love.graphics.setColor(1,1,1,1)
-  love.graphics.setFont(fpsFont)
-  love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+  -- love.graphics.setColor(1,1,1,1)
+  -- love.graphics.setFont(fpsFont)
+  --love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
 end
 
 return DrawSystem

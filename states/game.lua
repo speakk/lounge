@@ -21,9 +21,6 @@ local function generateMap(self)
 end
 
 function game:enter()
-  print("game enter", self)
-  print("World", self.world)
-
   self.currentLevel = 1
   self.levelProgress = 0
   self.waveLength = 8
@@ -61,7 +58,6 @@ function game:enter()
 end
 
 function game:leave()
-  print("leaving game", self.world, #self.world.__entities)
   self.world:clear()
   self.world:__flush()
   --self.world = nil
@@ -69,13 +65,8 @@ function game:leave()
   music:stop()
 end
 
-function game:huh()
-  print("HUH")
-end
-
 function game:update(dt)
   if self.isDead then
-    --Gamestate.switch(require 'states.death')
     music:pause()
     Gamestate.push(require 'states.death')
   else

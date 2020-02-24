@@ -3,6 +3,7 @@ local Gamestate = require 'libs.hump.gamestate'
 local UISystem = Concord.system({cmps.player, "player"})
 
 local levelFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", 64)
+local freqFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", 24)
 
 local healthBarW = 400
 local healthBarH = 30
@@ -10,13 +11,16 @@ local healthBarH = 30
 local levelBarW = 400
 local levelBarH = 30
 
+local freqBarW = 400
+local freqBarH = 20
+
 local backgroundColor = { 0.3, 0.2, 0.5 }
 local filledColor = { 0.8, 0.4, 0.5 }
 
-function drawProgressBar(x, y, w, h, color, backgroundColor, progress, maxProgress, vertical)
+function drawProgressBar(x, y, w, h, color, backgroundColor, progress, maxProgress, vertical, rounding)
   if not progress then return end
   love.graphics.setColor(backgroundColor)
-  love.graphics.rectangle('fill', x, y, w, h, 5, 5)
+  love.graphics.rectangle('fill', x, y, w, h, rounding or 5, rounding or 5)
 
   love.graphics.setColor(color)
   local width = w
@@ -47,12 +51,21 @@ function drawFrequencyBar(self, w, h)
   local waveLength = Gamestate.current().waveLength
   if not waveLength then return end
 
-  local minLength = 1
+  local x = w/2 - healthBarW/2
+  local y = 200
 
-  local x = w - 60
-  local y = 30
+  if waveLength == 8 then waveLength = 7.99 end
 
-  drawProgressBar(x, y, 30, h-60, { 0.3, 0.1, 0.7 }, { 0.2, 0.1, 0.2 }, 8-waveLength, 8, true)
+  drawProgressBar(x, y, freqBarW, freqBarH, { 0.3, 0.1, 0.7 }, { 0.2, 0.1, 0.2 }, 8-waveLength, 8)
+end
+
+function drawFrequencyText(self, w, h)
+  local waveLength = Gamestate.current().waveLength
+  if not waveLength then return end
+
+  love.graphics.setColor(0.5,0.5,1,1)
+  love.graphics.setFont(freqFont)
+  love.graphics.printf("Wavelength: " .. waveLength, 0, 160, w, 'center')
 end
 
 function drawLevelBar(self, w, h)
@@ -63,7 +76,6 @@ function drawLevelBar(self, w, h)
 
   if not levelProgress then return end
   drawProgressBar(x, y, healthBarW, healthBarH, { 0.2, 0.8, 0.2 }, { 0.1, 0.4, 0.2 }, levelProgress, 100)
-  --print(levelProgress)
 end
 
 function drawCurrentLevel(self, w, h)
@@ -81,6 +93,7 @@ function UISystem:draw()
   drawCurrentLevel(self, w, h)
   drawLevelBar(self, w, h)
   drawFrequencyBar(self, w, h)
+  drawFrequencyText(self, w, h)
 end
 
 -- function UISystem:damageTaken(entity, damage)

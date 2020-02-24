@@ -126,7 +126,6 @@ do
       love.graphics.draw(sprite, currentX, currentY)
 
       local quad = love.graphics.newQuad(currentX, currentY, spriteWidth, spriteHeight, atlasCanvas:getDimensions())
-      print("drawing to canvas", currentX, currentY, spriteWidth, spriteHeight, atlasCanvas:getDimensions())
 
       flatMediaDB[category.name .. "." .. item.name] = {
         quad = quad,

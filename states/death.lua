@@ -17,7 +17,6 @@ local death = {}
 local music
 
 local function recalcUIPositions(w, h)
-  print("recalcUIPositions")
   playButton.view.x = w/2 - buttonW/2
   playButton.view.y = 500
 end
@@ -40,11 +39,7 @@ function death:enter(from)
 
     input('clicked', function()
       state.pressed = true
-      print("Leave??")
-      --self.from:clear()
       Gamestate.pop()
-      -- print("After pop!")
-
       -- -- Re-enter to start over
       Gamestate.switch({})
       Gamestate.switch(require 'states.game')
@@ -76,17 +71,10 @@ function death:enter(from)
     end
   end
 
-
-  print(buttonW, buttonH)
   playButton = helium(button)({content="Do it again"}, buttonW, buttonH)
   playButton:draw(400, 200)
-  print("SETTING DRAW FOR DEATH")
 
   recalcUIPositions(love.graphics.getDimensions())
-  -- local buttonFactory = helium(button)
-  -- local button = buttonFactory({}, 200, 100)
-  -- button:draw(400, 200)
-
 end
 
 function death:draw()
@@ -116,7 +104,6 @@ function death:resize(w, h)
 end
 
 function death:leave()
-  print("LEAVING DEATH")
   playButton:undraw()
   playButton = nil
   music:stop()
