@@ -5,6 +5,8 @@ local windowHeight = 800
 love.window.setMode(windowWidth, windowHeight, { resizable=true })
 love.graphics.setDefaultFilter('nearest', 'nearest')
 
+math.randomseed(os.time())
+
 
 -- GLOBALS BEGIN
 Concord = require('libs.concord')

@@ -11,7 +11,7 @@ return Concord.assemblage(function(entity, position, spritePath, collisionGroup,
   entity:give(cmps.dropOnDeath, {
     {
       type = "frequencyDrop",
-      chance = 1,
+      chance = 0.1,
     }
   })
 end)

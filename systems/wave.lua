@@ -9,7 +9,9 @@ local waveLength = 10
 
 function WaveSystem:waveLengthChange(newValue)
   local currentState = Gamestate.current()
+  currentState.waveLength = newValue
   if currentState.waveLength < 1 then currentState.waveLength = 1 end
+  if currentState.waveLength > 8 then currentState.waveLength = 8 end
 end
 
 function WaveSystem:generateWave()
@@ -22,7 +24,7 @@ function WaveSystem:generateWave()
     playerPosition = Vector(0,0)
   end
 
-  for i=1,Gamestate.current().currentLevel do
+  for i=1,Gamestate.current().currentLevel+3 do
     local spritePath = 'characters.playerFront'
     local plusOrMinus = 1
     local minDistance = 100
