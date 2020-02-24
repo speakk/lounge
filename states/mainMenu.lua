@@ -7,6 +7,7 @@ local game = require("states.game")
 local music
 
 local headerFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", 128)
+local instructionFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", 20)
 local buttonFont = love.graphics.newFont("fonts/MavenPro-Medium.ttf", 48)
 
 local buttonW = 200
@@ -70,7 +71,8 @@ local function recalcMenuPositions(ui, w, h)
   for i = 1,#ui do
     local uiElement = ui[i]
     uiElement.view.x = w/2 - buttonW/2
-    uiElement.view.y = h/2 - (#ui*buttonH)/2 + offsetY
+    --uiElement.view.y = h/2 - (#ui*buttonH)/2 + offsetY
+    uiElement.view.y = 400
 
     offsetY = offsetY + buttonH
   end
@@ -110,6 +112,11 @@ function mainMenu:draw()
   love.graphics.printf("Lounge", 5, 100, w, 'center')
   love.graphics.setColor(1,1,1,1)
   love.graphics.printf("Lounge", 0, 100, w, 'center')
+
+  love.graphics.setFont(instructionFont)
+  love.graphics.setColor(1,1,1,1)
+  love.graphics.printf("Survive as many waves as you can", 0, 290, w, 'center')
+  love.graphics.printf("The wave frequency increases with time", 0, 320, w, 'center')
 end
   
 return mainMenu

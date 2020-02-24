@@ -25,9 +25,10 @@ function WaveSystem:generateWave()
   for i=1,Gamestate.current().currentLevel+3 do
     local spritePath = 'characters.playerFront'
     local plusOrMinus = 1
-    local minDistance = 100
+    local minDistance = 800
+    local maxDistance = 1400
     if math.random() > 0.5 then plusOrMinus = -1 end
-    local position = playerPosition + (Vector(math.random(300),math.random(300)) + Vector(minDistance, minDistance)) * plusOrMinus
+    local position = playerPosition + Vector(math.max(minDistance, math.random(maxDistance)), math.max(minDistance, math.random(maxDistance))) * plusOrMinus
     local type = 'serpent'
     if math.random() > 0.5 then type = 'attacker' end
     local entity = Concord.entity():assemble(Concord.assemblages[type], position, spritePath, 'ai')

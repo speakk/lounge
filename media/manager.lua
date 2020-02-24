@@ -32,12 +32,12 @@ local mediaDB = {
       {
         name = "attackerLeft",
         fileName = 'lounge_game_attacker_left_face',
-        hotPoints = { gunMuzzle = { 1, 70 } }
+        hotPoints = { gunMuzzle = { 1, 93 } }
       },
       {
         name = "attackerRight",
         fileName = 'lounge_game_attacker_right_face',
-        hotPoints = { gunMuzzle = { 130, 70 } }
+        hotPoints = { gunMuzzle = { 130, 93 } }
       },
       {
         name = "attackerBack",
