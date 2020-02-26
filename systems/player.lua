@@ -16,6 +16,7 @@ local zoomSpeed = 0.05
 local zoomMultiplier = 0.4/speed
 
 local bulletDelay = 0.1
+local bulletVelocity = 1000
 
 function PlayerSystem:init()
   self.allowedToShoot = true
@@ -67,11 +68,10 @@ end
 
 function PlayerSystem:shoot()
   if self.allowedToShoot then
-    local bulletVelocity = 600
     for i=1,#self.pool do
       local player = self.pool[i]
-      if not player:get(cmps.sprites).sprites then return end
-      local gunMuzzle = mediaManager.getSprite(player:get(cmps.sprites).sprites[1].path).hotPoints.gunMuzzle
+      if not player:get(cmps.characterSpriteSheet).current then return end
+      local gunMuzzle = mediaManager.getSprite(player:get(cmps.characterSpriteSheet).current.path).hotPoints.gunMuzzle
       local from = player:get(cmps.position).vector.copy + Vector(gunMuzzle[1], gunMuzzle[2])
       local target = Vector(camera:mousePosition())
       local startVelocity = (target - from).normalized * bulletVelocity

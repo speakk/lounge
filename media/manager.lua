@@ -76,6 +76,10 @@ local mediaDB = {
       {
         name = 'glow',
         fileName = 'lounge_game_drop_glow'
+      },
+      {
+        name = 'shadow',
+        fileName = 'shadow'
       }
     }
   },

@@ -19,8 +19,8 @@ local aiHandlers = {
     velocityC.vector = (angle) * speed
   end,
   shooter = function(entity, target, self)
-    if not entity:get(cmps.sprites).sprites then return end
-    local gunMuzzle = mediaManager.getSprite(entity:get(cmps.sprites).sprites[1].path).hotPoints.gunMuzzle
+    if not entity:get(cmps.characterSpriteSheet).current then return end
+    local gunMuzzle = mediaManager.getSprite(entity:get(cmps.characterSpriteSheet).current.path).hotPoints.gunMuzzle
     local from = entity:get(cmps.position).vector.copy + Vector(gunMuzzle[1], gunMuzzle[2])
     local angle = (target - from).normalized
     local velocityC = entity:get(cmps.velocity)

@@ -1,4 +1,5 @@
 local Timer = require 'libs.hump.timer'
+local lume = require 'libs.lume'
 local Vector = require 'libs.brinevector'
 
 local Gamestate = require 'libs.hump.gamestate'
@@ -6,6 +7,8 @@ local Gamestate = require 'libs.hump.gamestate'
 local WaveSystem = Concord.system({cmps.player, 'player'})
 
 local waveLength = 10
+
+local enemyTypes = { 'serpent', 'attacker' }
 
 function WaveSystem:waveLengthChange(newValue)
   local currentState = Gamestate.current()
@@ -29,8 +32,7 @@ function WaveSystem:generateWave()
     local maxDistance = 1800
     if math.random() > 0.5 then plusOrMinus = -1 end
     local position = playerPosition + Vector(math.max(minDistance, math.random(maxDistance)), math.max(minDistance, math.random(maxDistance))) * plusOrMinus
-    local type = 'serpent'
-    if math.random() > 0.5 then type = 'attacker' end
+    local type = lume.randomchoice(enemyTypes)
     local entity = Concord.entity():assemble(Concord.assemblages[type], position, spritePath, 'ai')
     self:getWorld():addEntity(entity)
   end

@@ -9,24 +9,31 @@ local game = {}
 local music
 
 local function initializePlayer(self)
-  local entity = Concord.entity():assemble(Concord.assemblages.player, Vector(math.random(1000), math.random(1000)), spritePath, 'player', nil, self.playerMaxHealth)
+  local entity = Concord.entity():assemble(Concord.assemblages.player, Vector(self.worldSizeX/2, self.worldSizeY/2), spritePath, 'player', nil, self.playerMaxHealth)
   self.world:addEntity(entity)
 end
 
 local function generateMap(self)
   for i = 1,10 do
-    local entity = Concord.entity():assemble(Concord.assemblages.rock, Vector(math.random(2000) - 1000, math.random(2000) - 1000))
+    local entity = Concord.entity():assemble(Concord.assemblages.rock, Vector(math.random(self.worldSizeX), math.random(self.worldSizeY)))
     self.world:addEntity(entity)
   end
 end
 
+function initializeGameState(state)
+  state.currentLevel = 1
+  state.levelProgress = 0
+  state.waveLength = 8
+  state.isDead = false
+  state.playerMaxHealth = 100
+  state.playerHealth = state.playerMaxHealth
+
+  state.worldSizeX = 3000
+  state.worldSizeY = 3000
+end
+
 function game:enter()
-  self.currentLevel = 1
-  self.levelProgress = 0
-  self.waveLength = 8
-  self.isDead = false
-  self.playerMaxHealth = 100
-  self.playerHealth = self.playerMaxHealth
+  initializeGameState(self)
   
   self.world = Concord.world()
   self.world:addSystems(
@@ -34,6 +41,7 @@ function game:enter()
     Concord.systems.wave,
     Concord.systems.ai,
     Concord.systems.player,
+    Concord.systems.worldBounds,
     Concord.systems.move,
     Concord.systems.collision,
     Concord.systems.bullet,
@@ -44,6 +52,7 @@ function game:enter()
     Concord.systems.sound,
     Concord.systems.animation,
     Concord.systems.draw,
+    Concord.systems.particle,
     Concord.systems.ui
   )
 

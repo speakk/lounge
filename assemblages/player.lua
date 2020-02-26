@@ -12,4 +12,5 @@ return Concord.assemblage(function(entity, position, spritePath, collisionGroup,
     'characters.playerLeft','characters.playerRight','characters.playerFront','characters.playerBack'
   })
   entity:give(cmps.player)
+  entity:give(cmps.sprites, { { path = 'decals.shadow', x = 20, y = 80 } })
 end)
