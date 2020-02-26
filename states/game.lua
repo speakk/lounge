@@ -95,4 +95,8 @@ function game:resize(w, h)
   self.world:emit('resize', w, h)
 end
 
+function game:mousemoved(x, y, dx, dy)
+  self.world:emit('mousemoved', x, y, dx, dy)
+end
+
 return game

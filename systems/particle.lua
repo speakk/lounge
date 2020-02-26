@@ -10,7 +10,6 @@ local bloodParticleSystems = {}
 for i=1,200 do
   local bloodParticleSystem = love.graphics.newParticleSystem(love.graphics.newImage('media/decals/blood_drop.png'), 32)
   bloodParticleSystem:setParticleLifetime(0.2, 0.4) -- Particles live at least 2s and at most 5s.
-	--bloodParticleSystem:setEmitterLifeTime(3)
 	bloodParticleSystem:setSizeVariation(1)
 	bloodParticleSystem:setSpin(0, 2, 1)
 	bloodParticleSystem:setLinearAcceleration(-20, -20, 20, 20) -- Random movement in all directions.
