@@ -8,7 +8,7 @@ local WaveSystem = Concord.system({cmps.player, 'player'})
 
 local waveLength = 10
 
-local enemyTypes = { 'serpent', 'attacker' }
+local enemyTypes = { 'serpent', 'attacker', 'fastShooter' }
 
 function WaveSystem:waveLengthChange(newValue)
   local currentState = Gamestate.current()

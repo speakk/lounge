@@ -5,8 +5,6 @@ local mediaManager = require 'media.manager'
 
 local AISystem = Concord.system({cmps.position, cmps.velocity, cmps.ai}, {cmps.position, cmps.player, "player"})
 
-local speed = 300
-
 local shootChanceThreshold = 0.05
 local bulletVelocity = 400
 local bulletDelay = 0.3
@@ -14,6 +12,7 @@ local bulletDelay = 0.3
 local aiHandlers = {
   melee = function(entity, target, self)
     local from = entity:get(cmps.position).vector.copy
+    local speed = entity:get(cmps.ai).speed
     local angle = (target - from).normalized
     local velocityC = entity:get(cmps.velocity)
     velocityC.vector = (angle) * speed
@@ -22,6 +21,7 @@ local aiHandlers = {
     if not entity:get(cmps.characterSpriteSheet).current then return end
     local gunMuzzle = mediaManager.getSprite(entity:get(cmps.characterSpriteSheet).current.path).hotPoints.gunMuzzle
     local from = entity:get(cmps.position).vector.copy + Vector(gunMuzzle[1], gunMuzzle[2])
+    local speed = entity:get(cmps.ai).speed
     local angle = (target - from).normalized
     local velocityC = entity:get(cmps.velocity)
     velocityC.vector = (angle) * speed
